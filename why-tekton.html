@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="page-why">
 
 <!-- NAV -->
 <nav id="navbar">
@@ -85,6 +85,18 @@
   </div>
 </section>
 
+<!-- FULL-BLEED FOREST PHOTO BREAK -->
+<section style="position:relative; height:480px; overflow:hidden; margin: 0;">
+  <div style="position:absolute; inset:0; background-image:url('images/hero-forest.png'); background-size:cover; background-position:center 35%; background-attachment:fixed;"></div>
+  <div style="position:absolute; inset:0; background:linear-gradient(180deg, #060608 0%, rgba(6,6,8,0.1) 20%, rgba(6,6,8,0.1) 80%, #060608 100%);"></div>
+  <div style="position:relative; z-index:2; height:100%; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 2rem;">
+    <div>
+      <div style="font-family:'Outfit',sans-serif; font-size:clamp(2rem,4.5vw,3.8rem); font-weight:200; color:#fff; letter-spacing:-0.02em; line-height:1.1; text-shadow:0 2px 40px rgba(0,0,0,0.8);">Every tree left standing is a<br/><span style="color:#22c55e; font-weight:300;">victory for the planet.</span></div>
+      <div style="font-family:'Inter',sans-serif; font-size:1rem; color:rgba(255,255,255,0.6); margin-top:1.2rem; font-weight:300; text-shadow:0 1px 20px rgba(0,0,0,0.9);">4 million utility poles are installed or replaced in the US every year.<br/>Tekton means none of them require a tree to be cut down.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ENVIRONMENTAL SPLITS -->
 <section class="env-section">
   <div class="section-wrap">
@@ -105,7 +117,7 @@
           <li>Full material traceability — no deforestation in supply chain</li>
         </ul>
       </div>
-      <div class="env-visual reveal">
+      <div class="env-visual img-deforestation reveal">
         <div class="section-eyebrow">Deforestation Impact</div>
         <div style="font-family:'Outfit',sans-serif; font-size:4rem; font-weight:200; color:#22c55e; margin-bottom:0.5rem;">0</div>
         <div style="font-family:'Inter',sans-serif; font-size:0.82rem; color:rgba(255,255,255,0.4); margin-bottom:2rem; letter-spacing:0.03em;">Trees harvested per Tekton pole manufactured</div>
@@ -120,7 +132,7 @@
 
     <!-- Split 2 — Chemical Contamination -->
     <div class="env-split reverse" style="margin-top:8rem;">
-      <div class="env-visual reveal">
+      <div class="env-visual img-contamination reveal">
         <div class="section-eyebrow">Chemical-Free Manufacturing</div>
         <p style="font-family:'Inter',sans-serif; font-size:0.88rem; color:rgba(255,255,255,0.45); line-height:1.85; margin-bottom:1.5rem;">Wood poles are treated with toxic preservatives — creosote, pentachlorophenol (penta), and chromated copper arsenate (CCA) — to resist decay. These chemicals leach into soil and groundwater throughout the pole's service life and create hazardous waste disposal requirements at end of life.</p>
         <div style="display:flex; flex-direction:column; gap:0.8rem;">
@@ -158,7 +170,7 @@
         <p>At scale — replacing millions of poles — the carbon math becomes one of the most significant infrastructure-related emissions reductions available in the utility sector today.</p>
         <p>Zero water consumption in manufacturing further reduces the environmental cost of production. Tekton is not just the better pole — it's the responsible one.</p>
       </div>
-      <div class="env-visual reveal">
+      <div class="env-visual img-clean-water reveal">
         <div class="section-eyebrow">CO₂ Output — per 1,000 Poles (kg)</div>
         <div class="co2-comparison" id="co2Chart">
           <div class="co2-row">

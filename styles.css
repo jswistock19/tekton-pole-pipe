@@ -77,9 +77,21 @@ body {
 }
 .page-hero-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(232,193,74,0.07) 0%, transparent 65%),
-              linear-gradient(180deg, #060608 0%, #0c0c10 100%);
+  background-size: cover; background-position: center 35%; background-repeat: no-repeat;
 }
+.page-hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(6,6,8,0.6) 0%,
+    rgba(6,6,8,0.4) 35%,
+    rgba(6,6,8,0.8) 70%,
+    #060608 100%);
+}
+/* Per-page hero images */
+body.page-product .page-hero-bg { background-image: url('images/hero-product.png'); background-position: center 60%; }
+body.page-why .page-hero-bg { background-image: url('images/hero-forest.png'); background-position: center 50%; }
+body.page-applications .page-hero-bg { background-image: url('images/wildfire.png'); background-position: center 40%; }
+body.page-contact .page-hero-bg { background-image: url('images/hero-contact.png'); background-position: center 55%; }
 .page-hero-content { position: relative; z-index: 2; max-width: 1320px; margin: 0 auto; width: 100%; }
 .page-hero-eyebrow {
   font-family: 'Inter', sans-serif; font-size: 0.7rem;
@@ -111,9 +123,17 @@ body {
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(232,193,74,0.08) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 80% at 20% 70%, rgba(245,166,35,0.05) 0%, transparent 70%),
-              linear-gradient(180deg, #060608 0%, #0c0c10 100%);
+  background-image: url('images/hero-grid.png');
+  background-size: cover; background-position: center 40%; background-repeat: no-repeat;
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(6,6,8,0.55) 0%,
+    rgba(6,6,8,0.35) 40%,
+    rgba(6,6,8,0.75) 75%,
+    #060608 100%),
+    radial-gradient(ellipse 60% 70% at 60% 40%, rgba(232,193,74,0.12) 0%, transparent 65%);
 }
 .hero-grid-overlay {
   position: absolute; inset: 0; pointer-events: none;
@@ -408,11 +428,19 @@ body {
   content: '✦'; color: #e8c14a; font-size: 0.55rem; flex-shrink: 0; margin-top: 0.25rem;
 }
 .material-highlight {
-  background: linear-gradient(135deg, rgba(232,193,74,0.06) 0%, rgba(232,193,74,0.02) 100%);
-  border: 1px solid rgba(232,193,74,0.15);
+  background-image: url('images/manufacturing.png');
+  background-size: cover; background-position: center 60%;
+  border: 1px solid rgba(232,193,74,0.2);
   border-radius: 20px; padding: 3.5rem; margin-bottom: 6rem;
   display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  position: relative; overflow: hidden;
 }
+.material-highlight::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(6,6,8,0.88) 0%, rgba(6,6,8,0.72) 55%, rgba(6,6,8,0.82) 100%);
+  border-radius: 20px;
+}
+.material-highlight > * { position: relative; z-index: 1; }
 .material-highlight h2 {
   font-family: 'Outfit', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 200; color: #f5f3ee; line-height: 1.12; margin-bottom: 1rem;
@@ -499,12 +527,21 @@ body {
 .env-visual {
   background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
   border-radius: 20px; padding: 3rem; position: relative; overflow: hidden;
+  background-size: cover; background-position: center;
 }
 .env-visual::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232,193,74,0.05) 0%, transparent 70%);
-  pointer-events: none;
+  background: linear-gradient(135deg, rgba(6,6,8,0.82) 0%, rgba(6,6,8,0.65) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232,193,74,0.06) 0%, transparent 70%);
+  pointer-events: none; border-radius: 20px;
 }
+.env-visual > * { position: relative; z-index: 1; }
+/* Per-panel images */
+.env-visual.img-deforestation { background-image: url('images/deforestation.png'); }
+.env-visual.img-contamination { background-image: url('images/contamination.png'); }
+.env-visual.img-clean-water { background-image: url('images/clean-water.png'); background-position: center 30%; }
+.env-visual.img-manufacturing { background-image: url('images/manufacturing.png'); }
+.env-visual.img-utility { background-image: url('images/utility-grid.png'); }
 .co2-comparison {
   display: flex; flex-direction: column; gap: 1.2rem;
 }
@@ -554,14 +591,20 @@ body {
 
 /* ===== NO MORE TREES BANNER ===== */
 .notrees-banner {
-  background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(232,193,74,0.04) 50%, rgba(34,197,94,0.06) 100%);
-  border-top: 1px solid rgba(34,197,94,0.12);
-  border-bottom: 1px solid rgba(34,197,94,0.12);
-  padding: 80px 0; text-align: center; position: relative; overflow: hidden;
+  background-image: url('images/hero-forest.png');
+  background-size: cover; background-position: center 45%;
+  border-top: 1px solid rgba(34,197,94,0.15);
+  border-bottom: 1px solid rgba(34,197,94,0.15);
+  padding: 100px 0; text-align: center; position: relative; overflow: hidden;
 }
 .notrees-banner::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(34,197,94,0.05) 0%, transparent 70%);
+  background: linear-gradient(180deg,
+    rgba(6,6,8,0.75) 0%,
+    rgba(6,6,8,0.55) 35%,
+    rgba(6,6,8,0.6) 65%,
+    rgba(6,6,8,0.82) 100%),
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(34,197,94,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 .notrees-banner .section-wrap { position: relative; z-index: 2; }
@@ -595,7 +638,24 @@ body {
   border-radius: 20px; padding: 2.8rem;
   transition: border-color 0.3s, background 0.3s, transform 0.25s;
   position: relative; overflow: hidden;
+  background-size: cover; background-position: center;
 }
+/* App card image backgrounds */
+.app-card.gold:first-of-type { background-image: url('images/utility-grid.png'); }
+.app-card.green:first-of-type { background-image: url('images/wildfire.png'); }
+.app-card.gold:nth-of-type(5) { background-image: url('images/hurricane.png'); }
+/* Image overlay for all app cards with images */
+.app-card[style*="background-image"]::before, .app-card.has-img::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0.88) 100%);
+  border-radius: 20px; pointer-events: none;
+}
+.app-card.has-img > * { position: relative; z-index: 1; }
+/* Explicitly assigned via class */
+.app-card.img-utility { background-image: url('images/utility-grid.png'); }
+.app-card.img-wildfire { background-image: url('images/wildfire.png'); }
+.app-card.img-hurricane { background-image: url('images/hurricane.png'); }
+.app-card.img-manufacturing { background-image: url('images/manufacturing.png'); }
 .app-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   opacity: 0; transition: opacity 0.3s;
