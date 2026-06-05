@@ -1421,3 +1421,215 @@ body.page-exit { animation: pageExit 0.28s ease both; }
   .cta-strip-actions { flex-direction: column; width: 100%; }
   .cta-strip-actions .btn-primary, .cta-strip-actions .btn-ghost { text-align: center; width: 100%; }
 }
+
+/* ===== ENV BRIDGE — dark transition from paper to forest ===== */
+.env-bridge {
+  height: 140px;
+  background: linear-gradient(to bottom, var(--paper) 0%, var(--ink) 100%);
+}
+
+/* ===== NOTREES SECTION — better text contrast ===== */
+.notrees-section {
+  position: relative;
+  min-height: 80vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.notrees-bg {
+  position: absolute; inset: 0;
+  background-image: url('images/hero-forest.png');
+  background-size: cover; background-position: center;
+  background-attachment: fixed;
+}
+.notrees-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8,8,9,0.65) 0%,
+    rgba(8,8,9,0.45) 40%,
+    rgba(8,8,9,0.72) 100%
+  );
+}
+.notrees-content {
+  position: relative; z-index: 2;
+  text-align: center; max-width: 860px;
+  padding: 120px var(--pad);
+}
+.notrees-content h2 {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: clamp(3rem, 6vw, 6.5rem); line-height: 1.0;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: #fff; margin: 1.5rem 0;
+}
+.notrees-content h2 em {
+  color: var(--green); font-style: normal;
+}
+.notrees-content p {
+  font-family: 'Barlow', sans-serif; font-size: 1.05rem; font-weight: 300;
+  color: rgba(255,255,255,0.7); max-width: 640px; margin: 0 auto 2.5rem;
+  line-height: 1.85;
+}
+.notrees-nums {
+  display: flex; gap: 0; margin-top: 4rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.nn-item {
+  flex: 1; padding: 2rem 1.5rem;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+.nn-item:last-child { border-right: none; }
+.nn-num {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: clamp(2.5rem, 4vw, 4rem); color: var(--gold);
+  line-height: 1; letter-spacing: 0.04em;
+}
+.nn-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 0.6rem;
+}
+
+/* ===== ENV PROTECT SECTION — 2x2 waterfall grid ===== */
+.env-protect-section {
+  background: var(--ink);
+}
+.env-protect-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  min-height: 700px;
+}
+.ep-panel {
+  position: relative; overflow: hidden;
+}
+.ep-panel-img {
+  background-size: cover; background-position: center;
+  min-height: 480px;
+}
+.ep-panel-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,9,0.75) 0%, rgba(8,8,9,0.15) 60%);
+}
+.ep-panel-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 2rem 2.5rem;
+  z-index: 2;
+}
+.ep-tag {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 0.5rem;
+}
+.ep-caption-text {
+  font-family: 'Barlow', sans-serif; font-size: 0.88rem; font-weight: 300;
+  color: rgba(255,255,255,0.65); line-height: 1.65; max-width: 380px;
+}
+.ep-panel-dark {
+  background: var(--ink-2);
+  padding: 5rem 4.5rem;
+  display: flex; flex-direction: column; justify-content: center; gap: 1.2rem;
+}
+.ep-panel-dark h3 {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: clamp(2rem, 3vw, 3rem); text-transform: uppercase;
+  letter-spacing: 0.06em; line-height: 1.05; color: #fff; margin: 0.5rem 0;
+}
+.ep-panel-dark p {
+  font-family: 'Barlow', sans-serif; font-size: 0.9rem; font-weight: 300;
+  color: var(--text-dim); line-height: 1.85;
+}
+.ep-stat-row {
+  display: flex; gap: 2.5rem; margin-top: 1.5rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--border);
+}
+.ep-stat {
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+.ep-stat-num {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: 2.2rem; color: var(--green); line-height: 1;
+  letter-spacing: 0.02em;
+}
+.ep-stat-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-dimmer); line-height: 1.6;
+}
+
+/* ===== RIVER PROMISE — full bleed with mountain river ===== */
+.river-promise {
+  position: relative; overflow: hidden;
+  min-height: 65vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.river-promise-bg {
+  position: absolute; inset: 0;
+  background-image: url('images/clean-river.png');
+  background-size: cover; background-position: center 40%;
+  background-attachment: fixed;
+}
+.river-promise-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(8,8,9,0.82) 0%,
+    rgba(8,8,9,0.55) 50%,
+    rgba(8,8,9,0.75) 100%
+  );
+}
+.river-promise-content {
+  position: relative; z-index: 2;
+  text-align: center; max-width: 900px;
+  padding: 100px var(--pad);
+}
+.river-promise-content blockquote {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: clamp(1.6rem, 3vw, 2.8rem); text-transform: uppercase;
+  letter-spacing: 0.06em; line-height: 1.2;
+  color: #fff; margin: 1.5rem 0 4rem;
+}
+.river-promise-stats {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 3.5rem;
+}
+.rp-stat {
+  flex: 1; text-align: center; padding: 0 3rem;
+}
+.rp-divider {
+  flex: 0; width: 1px; height: 80px;
+  background: rgba(255,255,255,0.12);
+  padding: 0;
+}
+.rp-num {
+  font-family: 'Barlow', sans-serif; font-weight: 200;
+  font-size: clamp(3rem, 5vw, 5rem); color: var(--green);
+  line-height: 1; letter-spacing: 0.04em; margin-bottom: 0.7rem;
+}
+.rp-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); line-height: 1.7;
+}
+
+/* ===== RESPONSIVE env sections ===== */
+@media (max-width: 1024px) {
+  .env-protect-grid { grid-template-columns: 1fr; }
+  .ep-panel-img { min-height: 380px; }
+  .ep-panel-dark { padding: 3.5rem 2.5rem; }
+  .river-promise-stats { flex-wrap: wrap; gap: 2rem; }
+  .rp-divider { display: none; }
+  .rp-stat { flex: 1 1 40%; }
+  .notrees-bg { background-attachment: scroll; }
+  .river-promise-bg { background-attachment: scroll; }
+}
+@media (max-width: 768px) {
+  .notrees-nums { flex-wrap: wrap; }
+  .nn-item { flex: 1 1 45%; }
+  .ep-stat-row { gap: 1.5rem; }
+  .rp-stat { flex: 1 1 100%; }
+  .env-bridge { height: 80px; }
+}
