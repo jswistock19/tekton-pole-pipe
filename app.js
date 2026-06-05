@@ -1,202 +1,160 @@
-// ===== CURSOR GLOW =====
-const cursorGlow = document.getElementById('cursorGlow');
-if (cursorGlow) {
+/* =====================================================
+   TEKTON POLE & PIPE — APP.JS
+   Premium interactions, scroll reveal, cursor glow
+   ===================================================== */
+
+'use strict';
+
+/* ===== NAV SCROLL ===== */
+(function initNav() {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
+  const onScroll = () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ===== CURSOR GLOW ===== */
+(function initCursor() {
+  const glow = document.getElementById('cursor-glow');
+  if (!glow) return;
+  let mx = -200, my = -200;
+  let cx = -200, cy = -200;
+  let raf;
+
   document.addEventListener('mousemove', (e) => {
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
+    mx = e.clientX;
+    my = e.clientY;
   });
-}
 
-// ===== NAV SCROLL =====
-const navbar = document.getElementById('navbar');
-if (navbar) {
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
-}
-
-// ===== MOBILE HAMBURGER =====
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-    const spans = hamburger.querySelectorAll('span');
-    if (mobileMenu.classList.contains('open')) {
-      spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
-    } else {
-      spans[0].style.transform = '';
-      spans[1].style.opacity = '';
-      spans[2].style.transform = '';
-    }
-  });
-  // Close on link click
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-    });
-  });
-}
-
-// ===== TYPEWRITER =====
-const typeEl = document.getElementById('typewriter');
-if (typeEl) {
-  const phrases = ['Power Grid', 'Utility Sector', 'Infrastructure', 'Energy Network', 'Grid Reliability', 'Pole Standards', 'Clean Energy'];
-  let phraseIndex = 0, charIndex = 0, deleting = false;
-  function typeLoop() {
-    const current = phrases[phraseIndex];
-    if (!deleting) {
-      typeEl.textContent = current.slice(0, ++charIndex);
-      if (charIndex === current.length) { deleting = true; setTimeout(typeLoop, 2400); return; }
-    } else {
-      typeEl.textContent = current.slice(0, --charIndex);
-      if (charIndex === 0) { deleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
-    }
-    setTimeout(typeLoop, deleting ? 50 : 75);
+  function tick() {
+    cx += (mx - cx) * 0.12;
+    cy += (my - cy) * 0.12;
+    glow.style.transform = `translate(${cx - 160}px, ${cy - 160}px)`;
+    raf = requestAnimationFrame(tick);
   }
-  typeLoop();
-}
+  tick();
+})();
 
-// ===== ANIMATED COUNTER =====
-function animateCounter(el, target, duration = 2200, decimals = 0) {
-  if (!el) return;
-  let start = null;
-  function step(ts) {
-    if (!start) start = ts;
-    const progress = Math.min((ts - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 4);
-    const val = ease * target;
-    el.textContent = decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString();
-    if (progress < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
+/* ===== SCROLL REVEAL ===== */
+(function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
 
-// Hero counters
-const heroPanel = document.querySelector('.hero-stat-stack');
-if (heroPanel) {
-  const heroObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounter(document.getElementById('poleStat'), 84);
-        animateCounter(document.getElementById('marketStat'), 50);
-        animateCounter(document.getElementById('lifeStat'), 75);
-        animateCounter(document.getElementById('waterStat'), 0);
-        heroObs.disconnect();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
-  heroObs.observe(heroPanel);
-}
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -60px 0px'
+  });
 
-// Crisis counters
-const crisisGrid = document.querySelector('.crisis-counters');
-if (crisisGrid) {
-  const crisisObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounter(document.getElementById('agingPoles'), 180000000, 2800);
-        animateCounter(document.getElementById('stormCost'), 27, 2200);
-        animateCounter(document.getElementById('wildfireStart'), 1500, 2000);
-        animateCounter(document.getElementById('outageHours'), 8, 2000);
-        crisisObs.disconnect();
-      }
-    });
-  }, { threshold: 0.2 });
-  crisisObs.observe(crisisGrid);
-}
+  els.forEach(el => observer.observe(el));
+})();
 
-// ===== CO2 BARS =====
-const co2Chart = document.getElementById('co2Chart');
-if (co2Chart) {
-  const co2Obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        co2Chart.querySelectorAll('.co2-bar').forEach(bar => {
-          bar.style.width = bar.dataset.width + '%';
-        });
-        co2Obs.disconnect();
+/* ===== TICKER ===== */
+(function initTicker() {
+  const track = document.getElementById('ticker-track');
+  if (!track) return;
+
+  // Clone items for seamless loop
+  const items = track.innerHTML;
+  track.innerHTML = items + items;
+
+  let pos = 0;
+  const speed = 0.55;
+
+  function tick() {
+    pos -= speed;
+    const half = track.scrollWidth / 2;
+    if (Math.abs(pos) >= half) pos = 0;
+    track.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ===== CO2 BARS ANIMATE ===== */
+(function initCo2Bars() {
+  const bars = document.querySelectorAll('.co2-bar');
+  if (!bars.length) return;
+
+  // Reset widths to 0, animate in on scroll
+  bars.forEach(bar => {
+    const target = bar.getAttribute('data-target');
+    bar.style.width = '0%';
+    bar.dataset.targetWidth = target + '%';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        const targetW = bar.dataset.targetWidth;
+        setTimeout(() => {
+          bar.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+          bar.style.width = targetW;
+        }, 200);
+        observer.unobserve(bar);
       }
     });
   }, { threshold: 0.3 });
-  co2Obs.observe(co2Chart);
-}
 
-// ===== TICKER =====
-const tickerInner = document.getElementById('tickerInner');
-if (tickerInner) {
-  const events = [
-    { flag: '🇺🇸', title: 'Texas Ice Storm — 4.5M Homes Lost Power', year: '2021', tag: 'Grid Failure' },
-    { flag: '🇺🇸', title: 'PG&E Power Lines Sparked Dixie Fire — Largest CA Wildfire', year: '2021', tag: 'Wildfire' },
-    { flag: '🇺🇸', title: 'Hurricane Ida — 1M Louisiana Customers Without Power 2+ Weeks', year: '2021', tag: 'Storm Damage' },
-    { flag: '🇺🇸', title: 'Maui Wildfires — Power Lines Under Investigation', year: '2023', tag: 'Wildfire' },
-    { flag: '🇺🇸', title: 'Pacific Northwest Heat Dome — Grid Pushed to Breaking Point', year: '2021', tag: 'Grid Stress' },
-    { flag: '🇺🇸', title: 'Hurricane Ian — 2.5M FL Customers Lost Power', year: '2022', tag: 'Storm Damage' },
-    { flag: '🇺🇸', title: 'NESC: 45% of US Poles Are Past Design Life', year: '2023', tag: 'Aging Infrastructure' },
-    { flag: '🇺🇸', title: 'California — 1,500+ Wildfires Linked to Power Lines Since 2015', year: '2024', tag: 'Wildfire' },
-    { flag: '🇺🇸', title: 'Florida — Wood Pole Failures Add $4.5B to Hurricane Repair Costs', year: '2022', tag: 'Economic Loss' },
-    { flag: '🇺🇸', title: 'DOE: US Grid Needs $2T Investment by 2035', year: '2023', tag: 'Infrastructure Gap' },
-    { flag: '🇺🇸', title: 'Northeast Winter Storm — 500K Without Power 5+ Days', year: '2022', tag: 'Storm Damage' },
-    { flag: '🇺🇸', title: 'Texas — Utility Poles Still Being Replaced From 2017 Harvey', year: '2023', tag: 'Backlog' },
-    { flag: '🇺🇸', title: 'Louisiana — Chemical Leaching From Creosote Poles Contaminates Groundwater', year: '2022', tag: 'Contamination' },
-    { flag: '🇺🇸', title: 'EPA Report: CCA-Treated Poles Linked to Arsenic Soil Contamination', year: '2023', tag: 'Environmental' },
-  ];
-  const all = [...events, ...events];
-  all.forEach(ev => {
-    const el = document.createElement('div');
-    el.className = 'ticker-event';
-    el.innerHTML = `<span class="t-flag">${ev.flag}</span><span class="t-title">${ev.title}</span><span class="t-tag">${ev.tag} ${ev.year}</span>`;
-    tickerInner.appendChild(el);
-  });
-}
+  bars.forEach(bar => observer.observe(bar));
+})();
 
-// ===== CONTACT FORM =====
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '✓ Message Sent — We\'ll Be in Touch Soon';
-    btn.style.background = '#22c55e';
-    btn.style.color = '#fff';
-    btn.disabled = true;
-  });
-}
+/* ===== PAGE TRANSITIONS ===== */
+(function initTransitions() {
+  document.body.classList.add('page-loaded');
 
-// ===== SCROLL REVEAL =====
-const revealEls = document.querySelectorAll('.reveal');
-if (revealEls.length) {
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate');
-        revealObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-  revealEls.forEach(el => revealObs.observe(el));
-}
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    // Only internal links, not anchors, not external
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (link.target === '_blank') return;
 
-// ===== PAGE TRANSITION =====
-document.querySelectorAll('a[href]').forEach(link => {
-  const href = link.getAttribute('href');
-  if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto') && !href.startsWith('tel')) {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      document.body.style.opacity = '0';
-      document.body.style.transition = 'opacity 0.2s ease';
-      setTimeout(() => { window.location.href = href; }, 200);
-    });
-  }
-});
-window.addEventListener('load', () => {
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.35s ease';
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      document.body.style.opacity = '1';
+      document.body.classList.add('page-exit');
+      setTimeout(() => {
+        window.location.href = href;
+      }, 280);
     });
   });
-});
+})();
+
+/* ===== CONTACT FORM ===== */
+(function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    // Let mailto action fire, but show confirmation
+    const btn = form.querySelector('.form-submit');
+    if (btn) {
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = 'var(--green)';
+      btn.style.borderColor = 'var(--green)';
+      btn.disabled = true;
+    }
+  });
+})();
+
+/* ===== PARALLAX HERO ===== */
+(function initParallax() {
+  const heroes = document.querySelectorAll('.page-hero-bg, .hero-bg');
+  if (!heroes.length) return;
+
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    heroes.forEach(el => {
+      el.style.transform = `translateY(${sy * 0.35}px)`;
+    });
+  }, { passive: true });
+})();
